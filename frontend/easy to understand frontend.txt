@@ -1,0 +1,67 @@
+RONTEND_COMPLETE_FLOW.md
+Includes:
+Folder structure overview
+Step-by-step application flow
+User journey flows (new user, returning user)
+How files are linked together
+Component hierarchy
+State management flow
+API integration flow
+Routing flow
+File-by-file explanations
+Data flow examples
+Component communication patterns
+Import relationships
+Visual flow diagrams
+Security flow
+Performance optimizations
+2. FRONTEND_VISUAL_DIAGRAM.md
+Visual diagrams showing:
+Application structure tree
+Complete user journey flow
+Component communication flow
+Data flow diagram
+Route protection flow
+Cart state flow
+Authentication state flow
+Page transition flow
+Request-response cycle
+Context provider nesting
+3. FRONTEND_QUICK_REFERENCE.md
+Quick reference with:
+Folder structure summary
+How it all works together
+File connections
+Common patterns
+File purpose table
+Quick start guide
+Finding things guide
+Highlights
+Application flow
+main.tsx (Entry)  ↓App.tsx (Root)  ↓Providers (Auth, Cart, Favorites)  ↓Router  ↓Routes → Pages  ↓Components → UI
+File organization
+pages/ = Routes (what user sees)
+components/ = Reusable UI pieces
+lib/ = Business logic & utilities
+data/ = Static/mock data
+How files connect
+React Context — global state (auth, cart, favorites)
+React Router — navigation between pages
+Props — parent to child communication
+API calls — backend integration via lib/api.ts
+Hooks — useAuth(), useCart(), useNavigate(), etc.
+Data flow
+User Action  ↓Component Event  ↓Context Update OR API Call  ↓State Change  ↓UI Re-render
+Key insights
+Single entry point: main.tsx → App.tsx
+Context providers: nested (ErrorBoundary → Auth → Cart → Favorites)
+Routing: all routes defined in App.tsx
+API: centralized in lib/api.ts with automatic JWT injection
+State: Context API for global state, useState for local state
+Persistence: localStorage for token, user, cart, favorites
+All documentation files are ready. They explain:
+What each file/folder does
+How files are connected
+How data flows
+How the application works end-to-end
+Visual diagrams for quick understanding
