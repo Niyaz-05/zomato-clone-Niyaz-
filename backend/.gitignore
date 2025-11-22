@@ -1,0 +1,11 @@
+node_modules/
+dist/
+build/
+.vite/
+coverage/
+logs/
+.env
+.env.*
+.eslintcache
+.DS_Store
+Thumbs.db

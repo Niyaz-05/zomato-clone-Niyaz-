@@ -1,0 +1,44 @@
+BACKEND_COMPLETE_FLOW.md
+Folder structure
+Application initialization flow
+Request flow (step-by-step)
+Database architecture and relationships
+Security and authentication flow
+File-by-file explanations
+Service layer patterns
+Repository patterns
+API endpoint map
+User ID correlation flow
+2. BACKEND_VISUAL_DIAGRAM.md
+Application structure diagrams
+Request flow diagrams
+Authentication flow diagrams
+JWT token validation flow
+Database entity relationship diagrams
+Service layer communication
+Security architecture
+Component dependency graphs
+Transaction flows
+3. BACKEND_QUICK_REFERENCE.md
+Quick folder structure
+Request flow summary
+Key annotations reference
+Security flow summary
+Database relationships quick reference
+Service patterns
+API endpoints quick list
+Common patterns and tips
+4. DATABASE_SCHEMA.md
+Complete table structures (SQL)
+All foreign key relationships
+User ID correlation verification
+Primary keys and indexes
+Hibernate auto-table creation
+Data integrity rules
+Sample queries
+Schema verification checklist
+Highlights
+User ID correlation: All user-related data (orders, addresses, reviews, subscriptions) is linked via user_id foreign keys.
+Complete request flow: From HTTP request → Security → Controller → Service → Repository → Database → Response.
+Visual diagrams: Architecture, data flow, and relationships.
+Database schema: All 12 tables documented with relationships and constraints.
