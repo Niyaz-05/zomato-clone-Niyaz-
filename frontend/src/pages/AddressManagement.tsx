@@ -181,30 +181,30 @@ const AddressManagement = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mb-8"
           >
-            <Card className="shadow-lg">
+            <Card className="shadow-lg bg-orange-50/50">
               <CardContent className="p-6">
-                <h2 className="text-xl font-semibold mb-4">
+                <h2 className="text-xl font-semibold mb-4 text-orange-900">
                   {editingId ? 'Edit Address' : 'Add New Address'}
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-orange-900 mb-2">
                         Address Type *
                       </label>
                       <select
                         name="type"
                         value={formData.type}
                         onChange={handleInputChange}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500"
+                        className="w-full px-3 py-2 border-2 border-orange-300 rounded-md bg-orange-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
                       >
-                        <option value="home">Home</option>
-                        <option value="work">Work</option>
-                        <option value="other">Other</option>
+                        <option value="home" className="bg-orange-50 text-gray-900">Home</option>
+                        <option value="work" className="bg-orange-50 text-gray-900">Work</option>
+                        <option value="other" className="bg-orange-50 text-gray-900">Other</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-orange-900 mb-2">
                         Label (Optional)
                       </label>
                       <Input
@@ -213,12 +213,13 @@ const AddressManagement = () => {
                         value={formData.label}
                         onChange={handleInputChange}
                         placeholder="e.g., Mom's House"
+                        className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-orange-900 mb-2">
                       Address Line 1 *
                     </label>
                     <Input
@@ -228,11 +229,12 @@ const AddressManagement = () => {
                       onChange={handleInputChange}
                       placeholder="House No., Building Name"
                       required
+                      className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-orange-900 mb-2">
                       Address Line 2 (Optional)
                     </label>
                     <Input
@@ -241,12 +243,13 @@ const AddressManagement = () => {
                       value={formData.addressLine2}
                       onChange={handleInputChange}
                       placeholder="Street, Area, Landmark"
+                      className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
                     />
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-orange-900 mb-2">
                         City *
                       </label>
                       <Input
@@ -256,10 +259,11 @@ const AddressManagement = () => {
                         onChange={handleInputChange}
                         placeholder="City"
                         required
+                        className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-orange-900 mb-2">
                         State *
                       </label>
                       <Input
@@ -269,10 +273,11 @@ const AddressManagement = () => {
                         onChange={handleInputChange}
                         placeholder="State"
                         required
+                        className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-orange-900 mb-2">
                         Pincode *
                       </label>
                       <Input
@@ -282,6 +287,7 @@ const AddressManagement = () => {
                         onChange={handleInputChange}
                         placeholder="Pincode"
                         required
+                        className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
                       />
                     </div>
                   </div>
@@ -292,9 +298,9 @@ const AddressManagement = () => {
                       name="isDefault"
                       checked={formData.isDefault}
                       onChange={handleInputChange}
-                      className="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-orange-300 rounded"
                     />
-                    <label className="ml-2 text-sm text-gray-700">
+                    <label className="ml-2 text-sm text-orange-900">
                       Set as default address
                     </label>
                   </div>

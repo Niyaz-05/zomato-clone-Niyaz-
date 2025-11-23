@@ -97,7 +97,7 @@ const Login = () => {
                 id="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-xl placeholder-gray-500 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all duration-300 hover:border-red-300 hover:shadow-md"
+                className="block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-xl placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 focus:bg-orange-50 transition-all duration-300 hover:border-orange-300 hover:shadow-md"
                 placeholder="you@example.com"
                 required
               />
@@ -117,7 +117,7 @@ const Login = () => {
                 id="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-xl placeholder-gray-500 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all duration-300 hover:border-red-300 hover:shadow-md"
+                className="block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 border-red-200 rounded-xl placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 focus:bg-orange-50 transition-all duration-300 hover:border-orange-300 hover:shadow-md"
                 placeholder="••••••••"
                 required
               />

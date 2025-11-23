@@ -256,7 +256,7 @@ const Profile = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-orange-900 mb-2">
                 Email
               </label>
               {isEditing ? (
@@ -265,7 +265,7 @@ const Profile = () => {
                   id="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+                  className="w-full px-3 py-2 border-2 border-orange-300 bg-orange-50 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                 />
               ) : (
                 <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
@@ -275,7 +275,7 @@ const Profile = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-orange-900 mb-2">
                 Phone Number
               </label>
               {isEditing ? (
@@ -284,7 +284,7 @@ const Profile = () => {
                   id="phoneNumber"
                   value={formData.phoneNumber}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
+                  className="w-full px-3 py-2 border-2 border-orange-300 bg-orange-50 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
                 />
               ) : (
                 <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">

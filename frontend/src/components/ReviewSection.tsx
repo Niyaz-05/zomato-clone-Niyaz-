@@ -254,13 +254,13 @@ const ReviewSection = ({ restaurantId, restaurantName }: ReviewSectionProps) => 
             value={comment}
             onChange={(e) => setComment(e.target.value)}
             placeholder="Share your experience..."
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 resize-none"
+            className="w-full px-4 py-3 border-2 border-orange-300 bg-orange-50 text-gray-900 placeholder:text-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 resize-none"
             rows={4}
           />
 
           {/* Image Upload */}
           <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-orange-900 mb-2">
               Add Photos (Optional, max 5)
             </label>
             <div className="flex items-center gap-4">

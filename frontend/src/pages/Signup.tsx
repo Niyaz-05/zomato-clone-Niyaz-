@@ -188,8 +188,8 @@ const Signup = () => {
                 id="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                className={`block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 rounded-xl placeholder-gray-500 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all duration-300 hover:shadow-md ${
-                  errors.name ? 'border-red-500 focus:ring-red-500 bg-red-50' : 'border-red-200 hover:border-red-300 focus:border-red-500'
+                className={`block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 rounded-xl placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-orange-50 transition-all duration-300 hover:shadow-md ${
+                  errors.name ? 'border-red-500 focus:ring-red-500 bg-red-50' : 'border-orange-200 hover:border-orange-300 focus:border-orange-500'
                 }`}
                 placeholder="Enter your full name"
               />
@@ -211,8 +211,8 @@ const Signup = () => {
                 id="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={`block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 rounded-xl placeholder-gray-500 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all duration-300 hover:shadow-md ${
-                  errors.email ? 'border-red-500 focus:ring-red-500 bg-red-50' : 'border-red-200 hover:border-red-300 focus:border-red-500'
+                className={`block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 rounded-xl placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-orange-50 transition-all duration-300 hover:shadow-md ${
+                  errors.email ? 'border-red-500 focus:ring-red-500 bg-red-50' : 'border-orange-200 hover:border-orange-300 focus:border-orange-500'
                 }`}
                 placeholder="you@example.com"
               />
@@ -234,8 +234,8 @@ const Signup = () => {
                 id="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={handleInputChange}
-                className={`block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 rounded-xl placeholder-gray-500 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all duration-300 hover:shadow-md ${
-                  errors.phoneNumber ? 'border-red-500 focus:ring-red-500 bg-red-50' : 'border-red-200 hover:border-red-300 focus:border-red-500'
+                className={`block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 rounded-xl placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-orange-50 transition-all duration-300 hover:shadow-md ${
+                  errors.phoneNumber ? 'border-red-500 focus:ring-red-500 bg-red-50' : 'border-orange-200 hover:border-orange-300 focus:border-orange-500'
                 }`}
                 placeholder="+1 (555) 000-0000"
               />
@@ -257,8 +257,8 @@ const Signup = () => {
                 id="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className={`block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 rounded-xl placeholder-gray-500 text-gray-800 font-medium focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white transition-all duration-300 hover:shadow-md ${
-                  errors.password ? 'border-red-500 focus:ring-red-500 bg-red-50' : 'border-red-200 hover:border-red-300 focus:border-red-500'
+                className={`block w-full pl-12 pr-4 py-3.5 bg-gradient-to-r from-red-50 to-orange-50 border-2 rounded-xl placeholder-gray-500 text-gray-900 font-medium focus:outline-none focus:ring-2 focus:ring-orange-500 focus:bg-orange-50 transition-all duration-300 hover:shadow-md ${
+                  errors.password ? 'border-red-500 focus:ring-red-500 bg-red-50' : 'border-orange-200 hover:border-orange-300 focus:border-orange-500'
                 }`}
                 placeholder="Minimum 6 characters"
               />
@@ -335,64 +335,64 @@ const Signup = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Address Type</label>
+                  <label className="block text-xs font-semibold text-orange-900 mb-1">Address Type</label>
                   <select
                     name="label"
                     value={currentAddress.label}
                     onChange={handleAddressChange}
-                    className="w-full px-3 py-2 border-2 border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 bg-white"
+                    className="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-orange-50 text-gray-900"
                   >
-                    <option value="home">Home</option>
-                    <option value="work">Work</option>
-                    <option value="other">Other</option>
+                    <option value="home" className="bg-orange-50 text-gray-900">Home</option>
+                    <option value="work" className="bg-orange-50 text-gray-900">Work</option>
+                    <option value="other" className="bg-orange-50 text-gray-900">Other</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Street Address</label>
+                  <label className="block text-xs font-semibold text-orange-900 mb-1">Street Address</label>
                   <input
                     type="text"
                     name="address"
                     value={currentAddress.address}
                     onChange={handleAddressChange}
-                    className="w-full px-3 py-2 border-2 border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 bg-white"
+                    className="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-orange-50 text-gray-900 placeholder:text-gray-500"
                     placeholder="House/Flat No., Building Name"
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">City</label>
+                    <label className="block text-xs font-semibold text-orange-900 mb-1">City</label>
                     <input
                       type="text"
                       name="city"
                       value={currentAddress.city}
                       onChange={handleAddressChange}
-                      className="w-full px-3 py-2 border-2 border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 bg-white"
+                      className="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-orange-50 text-gray-900 placeholder:text-gray-500"
                       placeholder="City"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-700 mb-1">State</label>
+                    <label className="block text-xs font-semibold text-orange-900 mb-1">State</label>
                     <input
                       type="text"
                       name="state"
                       value={currentAddress.state}
                       onChange={handleAddressChange}
-                      className="w-full px-3 py-2 border-2 border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 bg-white"
+                      className="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-orange-50 text-gray-900 placeholder:text-gray-500"
                       placeholder="State"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-gray-700 mb-1">Pincode</label>
+                  <label className="block text-xs font-semibold text-orange-900 mb-1">Pincode</label>
                   <input
                     type="text"
                     name="pincode"
                     value={currentAddress.pincode}
                     onChange={handleAddressChange}
-                    className="w-full px-3 py-2 border-2 border-red-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 bg-white"
+                    className="w-full px-3 py-2 border-2 border-orange-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 bg-orange-50 text-gray-900 placeholder:text-gray-500"
                     placeholder="Pincode"
                   />
                 </div>
