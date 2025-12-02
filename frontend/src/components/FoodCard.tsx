@@ -21,7 +21,7 @@ export interface FoodCardProps {
   className?: string
 }
 
-const FoodCard = ({
+const FoodCard = ({ 
   name,
   description,
   price,

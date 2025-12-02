@@ -298,3 +298,43 @@ export const reviewAPI = {
     await api.delete(`/reviews/${reviewId}`);
   }
 }
+
+export interface Address {
+  id: number;
+  label: string;
+  address: string;
+  landmark?: string;
+  city: string;
+  state: string;
+  pincode: string;
+  latitude?: number;
+  longitude?: number;
+  isDefault: boolean;
+  createdAt?: string;
+}
+
+export const addressAPI = {
+  getAddresses: async (): Promise<Address[]> => {
+    const response = await api.get<Address[]>('/users/addresses');
+    return response.data;
+  },
+
+  addAddress: async (addressData: AddressRequest): Promise<Address> => {
+    const response = await api.post<Address>('/users/addresses', addressData);
+    return response.data;
+  },
+
+  updateAddress: async (addressId: number, addressData: AddressRequest): Promise<Address> => {
+    const response = await api.put<Address>(`/users/addresses/${addressId}`, addressData);
+    return response.data;
+  },
+
+  deleteAddress: async (addressId: number): Promise<void> => {
+    await api.delete(`/users/addresses/${addressId}`);
+  },
+
+  setDefaultAddress: async (addressId: number): Promise<Address> => {
+    const response = await api.put<Address>(`/users/addresses/${addressId}/set-default`);
+    return response.data;
+  }
+}

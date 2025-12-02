@@ -7,28 +7,17 @@ import { Button } from '../components/ui/button'
 import { Card, CardContent } from '../components/ui/card'
 import { Input } from '../components/ui/input'
 import toast from 'react-hot-toast'
-
-interface Address {
-  id: string
-  type: 'home' | 'work' | 'other'
-  label: string
-  addressLine1: string
-  addressLine2?: string
-  city: string
-  state: string
-  pincode: string
-  isDefault: boolean
-}
+import { addressAPI, Address, AddressRequest } from '../lib/api'
 
 const AddressManagement = () => {
   const [addresses, setAddresses] = useState<Address[]>([])
   const [isAddingNew, setIsAddingNew] = useState(false)
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [formData, setFormData] = useState<Omit<Address, 'id'>>({
-    type: 'home',
+  const [editingId, setEditingId] = useState<number | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+  const [formData, setFormData] = useState<AddressRequest>({
     label: '',
-    addressLine1: '',
-    addressLine2: '',
+    address: '',
+    landmark: '',
     city: '',
     state: '',
     pincode: '',
@@ -43,16 +32,20 @@ const AddressManagement = () => {
       return
     }
 
-    // Load addresses from localStorage
-    const savedAddresses = localStorage.getItem('zomato-addresses')
-    if (savedAddresses) {
-      setAddresses(JSON.parse(savedAddresses))
-    }
+    loadAddresses()
   }, [isAuthenticated, navigate])
 
-  const saveAddresses = (newAddresses: Address[]) => {
-    setAddresses(newAddresses)
-    localStorage.setItem('zomato-addresses', JSON.stringify(newAddresses))
+  const loadAddresses = async () => {
+    setIsLoading(true)
+    try {
+      const loadedAddresses = await addressAPI.getAddresses()
+      setAddresses(loadedAddresses)
+    } catch (error) {
+      console.error('Failed to load addresses:', error)
+      toast.error('Failed to load addresses')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -63,83 +56,103 @@ const AddressManagement = () => {
     }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    if (!formData.addressLine1 || !formData.city || !formData.state || !formData.pincode) {
+    if (!formData.address || !formData.city || !formData.state || !formData.pincode || !formData.label) {
       toast.error('Please fill all required fields')
       return
     }
 
-    if (editingId) {
-      // Update existing address
-      const updatedAddresses = addresses.map(addr =>
-        addr.id === editingId ? { ...formData, id: editingId } : addr
-      )
-      saveAddresses(updatedAddresses)
-      toast.success('Address updated successfully!')
-      setEditingId(null)
-    } else {
-      // Add new address
-      const newAddress: Address = {
-        ...formData,
-        id: Date.now().toString()
-      }
-
-      // If this is the first address or marked as default, make it default
-      if (addresses.length === 0 || formData.isDefault) {
-        const updatedAddresses = addresses.map(addr => ({ ...addr, isDefault: false }))
-        saveAddresses([...updatedAddresses, { ...newAddress, isDefault: true }])
+    setIsLoading(true)
+    try {
+      if (editingId) {
+        // Update existing address
+        await addressAPI.updateAddress(editingId, formData)
+        toast.success('Address updated successfully!')
+        setEditingId(null)
       } else {
-        saveAddresses([...addresses, newAddress])
+        // Add new address
+        await addressAPI.addAddress(formData)
+        toast.success('Address added successfully!')
+        setIsAddingNew(false)
       }
 
-      toast.success('Address added successfully!')
-      setIsAddingNew(false)
-    }
+      // Reload addresses
+      await loadAddresses()
 
-    // Reset form
-    setFormData({
-      type: 'home',
-      label: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      state: '',
-      pincode: '',
-      isDefault: false
-    })
+      // Reset form
+      setFormData({
+        label: '',
+        address: '',
+        landmark: '',
+        city: '',
+        state: '',
+        pincode: '',
+        isDefault: false
+      })
+    } catch (error: any) {
+      console.error('Failed to save address:', error)
+      toast.error(error.response?.data?.message || 'Failed to save address')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleEdit = (address: Address) => {
-    setFormData(address)
+    setFormData({
+      label: address.label,
+      address: address.address,
+      landmark: address.landmark || '',
+      city: address.city,
+      state: address.state,
+      pincode: address.pincode,
+      isDefault: address.isDefault
+    })
     setEditingId(address.id)
     setIsAddingNew(true)
   }
 
-  const handleDelete = (id: string) => {
-    const updatedAddresses = addresses.filter(addr => addr.id !== id)
-    saveAddresses(updatedAddresses)
-    toast.success('Address deleted successfully!')
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this address?')) {
+      return
+    }
+
+    setIsLoading(true)
+    try {
+      await addressAPI.deleteAddress(id)
+      toast.success('Address deleted successfully!')
+      await loadAddresses()
+    } catch (error: any) {
+      console.error('Failed to delete address:', error)
+      toast.error(error.response?.data?.message || 'Failed to delete address')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const handleSetDefault = (id: string) => {
-    const updatedAddresses = addresses.map(addr => ({
-      ...addr,
-      isDefault: addr.id === id
-    }))
-    saveAddresses(updatedAddresses)
-    toast.success('Default address updated!')
+  const handleSetDefault = async (id: number) => {
+    setIsLoading(true)
+    try {
+      await addressAPI.setDefaultAddress(id)
+      toast.success('Default address updated!')
+      await loadAddresses()
+    } catch (error: any) {
+      console.error('Failed to set default address:', error)
+      toast.error(error.response?.data?.message || 'Failed to set default address')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
-  const getAddressIcon = (type: string) => {
-    switch (type) {
-      case 'home':
-        return <Home className="h-5 w-5" />
-      case 'work':
-        return <Briefcase className="h-5 w-5" />
-      default:
-        return <MapPinned className="h-5 w-5" />
+  const getAddressIcon = (label: string) => {
+    const lowerLabel = label.toLowerCase()
+    if (lowerLabel.includes('home') || lowerLabel.includes('house')) {
+      return <Home className="h-5 w-5" />
+    } else if (lowerLabel.includes('work') || lowerLabel.includes('office')) {
+      return <Briefcase className="h-5 w-5" />
+    } else {
+      return <MapPinned className="h-5 w-5" />
     }
   }
 
@@ -187,47 +200,16 @@ const AddressManagement = () => {
                   {editingId ? 'Edit Address' : 'Add New Address'}
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-orange-900 mb-2">
-                        Address Type *
-                      </label>
-                      <select
-                        name="type"
-                        value={formData.type}
-                        onChange={handleInputChange}
-                        className="w-full px-3 py-2 border-2 border-orange-300 rounded-md bg-orange-50 text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                      >
-                        <option value="home" className="bg-orange-50 text-gray-900">Home</option>
-                        <option value="work" className="bg-orange-50 text-gray-900">Work</option>
-                        <option value="other" className="bg-orange-50 text-gray-900">Other</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-orange-900 mb-2">
-                        Label (Optional)
-                      </label>
-                      <Input
-                        type="text"
-                        name="label"
-                        value={formData.label}
-                        onChange={handleInputChange}
-                        placeholder="e.g., Mom's House"
-                        className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
-                      />
-                    </div>
-                  </div>
-
                   <div>
                     <label className="block text-sm font-medium text-orange-900 mb-2">
-                      Address Line 1 *
+                      Label / Address Type *
                     </label>
                     <Input
                       type="text"
-                      name="addressLine1"
-                      value={formData.addressLine1}
+                      name="label"
+                      value={formData.label}
                       onChange={handleInputChange}
-                      placeholder="House No., Building Name"
+                      placeholder="e.g., Home, Work, Office"
                       required
                       className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
                     />
@@ -235,14 +217,29 @@ const AddressManagement = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-orange-900 mb-2">
-                      Address Line 2 (Optional)
+                      Complete Address *
                     </label>
                     <Input
                       type="text"
-                      name="addressLine2"
-                      value={formData.addressLine2}
+                      name="address"
+                      value={formData.address}
                       onChange={handleInputChange}
-                      placeholder="Street, Area, Landmark"
+                      placeholder="House No., Building Name, Street"
+                      required
+                      className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-orange-900 mb-2">
+                      Landmark (Optional)
+                    </label>
+                    <Input
+                      type="text"
+                      name="landmark"
+                      value={formData.landmark}
+                      onChange={handleInputChange}
+                      placeholder="Nearby landmark"
                       className="bg-orange-50 border-orange-300 text-gray-900 placeholder:text-gray-500 focus:ring-orange-500"
                     />
                   </div>
@@ -306,8 +303,8 @@ const AddressManagement = () => {
                   </div>
 
                   <div className="flex space-x-3 pt-4">
-                    <Button type="submit" className="flex-1 bg-red-600 hover:bg-red-700">
-                      {editingId ? 'Update Address' : 'Save Address'}
+                    <Button type="submit" className="flex-1 bg-red-600 hover:bg-red-700" disabled={isLoading}>
+                      {isLoading ? 'Saving...' : editingId ? 'Update Address' : 'Save Address'}
                     </Button>
                     <Button
                       type="button"
@@ -316,10 +313,9 @@ const AddressManagement = () => {
                         setIsAddingNew(false)
                         setEditingId(null)
                         setFormData({
-                          type: 'home',
                           label: '',
-                          addressLine1: '',
-                          addressLine2: '',
+                          address: '',
+                          landmark: '',
                           city: '',
                           state: '',
                           pincode: '',
@@ -327,6 +323,7 @@ const AddressManagement = () => {
                         })
                       }}
                       className="flex-1"
+                      disabled={isLoading}
                     >
                       Cancel
                     </Button>
@@ -338,7 +335,12 @@ const AddressManagement = () => {
         )}
 
         {/* Saved Addresses */}
-        {addresses.length > 0 ? (
+        {isLoading && addresses.length === 0 ? (
+          <div className="text-center py-16">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading addresses...</p>
+          </div>
+        ) : addresses.length > 0 ? (
           <div className="space-y-4">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">Saved Addresses</h2>
             {addresses.map((address, index) => (
@@ -354,11 +356,11 @@ const AddressManagement = () => {
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-3">
                           <div className="p-2 bg-red-100 rounded-lg text-red-600">
-                            {getAddressIcon(address.type)}
+                            {getAddressIcon(address.label)}
                           </div>
                           <div>
                             <h3 className="font-semibold text-gray-900 capitalize">
-                              {address.label || address.type}
+                              {address.label}
                             </h3>
                             {address.isDefault && (
                               <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
@@ -367,9 +369,9 @@ const AddressManagement = () => {
                             )}
                           </div>
                         </div>
-                        <p className="text-gray-700 mb-1">{address.addressLine1}</p>
-                        {address.addressLine2 && (
-                          <p className="text-gray-700 mb-1">{address.addressLine2}</p>
+                        <p className="text-gray-700 mb-1">{address.address}</p>
+                        {address.landmark && (
+                          <p className="text-gray-600 mb-1 text-sm">Near {address.landmark}</p>
                         )}
                         <p className="text-gray-600">
                           {address.city}, {address.state} - {address.pincode}

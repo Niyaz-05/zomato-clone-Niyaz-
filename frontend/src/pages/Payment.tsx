@@ -550,9 +550,12 @@ const Payment = () => {
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <div className="font-semibold text-gray-900">{address.label}</div>
+                        <div className="font-semibold text-gray-900">{address.label || 'Address'}</div>
                         <div className="text-sm text-gray-600 mt-1">{address.address}</div>
-                        <div className="text-sm text-gray-500">{address.city}, {address.state} - {address.pincode}</div>
+                        {address.landmark && (
+                          <div className="text-sm text-gray-500 mt-1">Near {address.landmark}</div>
+                        )}
+                        <div className="text-sm text-gray-500 mt-1">{address.city}, {address.state} - {address.pincode}</div>
                       </div>
                       {selectedAddressId === address.id && (
                         <CheckCircle className="w-6 h-6 text-red-600 flex-shrink-0" />

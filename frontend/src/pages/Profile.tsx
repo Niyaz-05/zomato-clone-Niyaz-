@@ -190,11 +190,11 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="space-y-6">
-            {/* Profile Picture */}
-            <div className="flex flex-col items-center mb-6">
-              <div className="relative">
-                <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-red-600 shadow-lg">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Left Column - Profile Picture */}
+            <div className="flex flex-col items-center md:items-start">
+              <div className="relative mb-4">
+                <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-red-600 shadow-xl">
                   {formData.profileImage ? (
                     <img 
                       src={formData.profileImage} 
@@ -203,7 +203,7 @@ const Profile = () => {
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center">
-                      <User className="w-16 h-16 text-white" />
+                      <User className="w-20 h-20 text-white" />
                     </div>
                   )}
                 </div>
@@ -211,7 +211,7 @@ const Profile = () => {
                   <button
                     onClick={() => fileInputRef.current?.click()}
                     disabled={isUploadingImage}
-                    className="absolute bottom-0 right-0 bg-red-600 text-white p-2 rounded-full hover:bg-red-700 transition-all shadow-lg hover:scale-110 disabled:opacity-50"
+                    className="absolute bottom-2 right-2 bg-red-600 text-white p-3 rounded-full hover:bg-red-700 transition-all shadow-lg hover:scale-110 disabled:opacity-50"
                     title="Upload profile picture"
                   >
                     {isUploadingImage ? (
@@ -230,76 +230,73 @@ const Profile = () => {
                 />
               </div>
               {isEditing && (
-                <p className="mt-2 text-xs text-gray-500 text-center">
-                  Click camera icon to upload
+                <p className="text-xs text-gray-500 text-center md:text-left">
+                  Click camera icon to upload profile picture
                 </p>
               )}
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Full Name
-              </label>
-              {isEditing ? (
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-500 focus:border-red-500"
-                />
-              ) : (
-                <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
-                  {user.name}
-                </p>
-              )}
-            </div>
+            {/* Right Column - Profile Information */}
+            <div className="space-y-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Full Name
+                </label>
+                {isEditing ? (
+                  <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all"
+                    placeholder="Enter your full name"
+                  />
+                ) : (
+                  <div className="text-gray-900 bg-gray-50 px-4 py-3 rounded-lg border border-gray-200">
+                    {user.name}
+                  </div>
+                )}
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-orange-900 mb-2">
-                Email
-              </label>
-              {isEditing ? (
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border-2 border-orange-300 bg-orange-50 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                />
-              ) : (
-                <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
-                  {user.email}
-                </p>
-              )}
-            </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Email Address
+                </label>
+                {isEditing ? (
+                  <input
+                    type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-orange-300 bg-orange-50 text-gray-900 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    placeholder="Enter your email"
+                  />
+                ) : (
+                  <div className="text-gray-900 bg-gray-50 px-4 py-3 rounded-lg border border-gray-200">
+                    {user.email}
+                  </div>
+                )}
+              </div>
 
-            <div>
-              <label className="block text-sm font-medium text-orange-900 mb-2">
-                Phone Number
-              </label>
-              {isEditing ? (
-                <input
-                  type="tel"
-                  id="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border-2 border-orange-300 bg-orange-50 text-gray-900 rounded-md shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
-                />
-              ) : (
-                <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md">
-                  {user.phoneNumber || 'Not provided'}
-                </p>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Role
-              </label>
-              <p className="text-gray-900 bg-gray-50 px-3 py-2 rounded-md capitalize">
-                {user.role}
-              </p>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Phone Number
+                </label>
+                {isEditing ? (
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleInputChange}
+                    className="w-full px-4 py-3 border-2 border-orange-300 bg-orange-50 text-gray-900 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all"
+                    placeholder="Enter your phone number"
+                  />
+                ) : (
+                  <div className="text-gray-900 bg-gray-50 px-4 py-3 rounded-lg border border-gray-200">
+                    {user.phoneNumber || 'Not provided'}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
